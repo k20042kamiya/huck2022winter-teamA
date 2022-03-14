@@ -1,5 +1,4 @@
-// import Nanka from './dokoka';
-
+import Datatable from './Datatable';
 function App() {
     const now = new Date();
     const timestamp = `${now.getHours()}:${now.getMinutes()}`;
@@ -13,14 +12,14 @@ function App() {
         </select>
         <ul id="timetable_list">
             {
-                // new Array(3).map((_, k) =>
-                //     <Nanka
-                //         key={ k }
-                //         route={ document.querySelector('#route').value }
-                //         start={ document.querySelector('#time_search').value }
-                //         date={ new Date() }
-                //     />
-                // )
+                new Array(1).map((_, k) =>
+                    <Datatable
+                        key={ k }
+                        route={ document.querySelector('#route').value }
+                        start={ document.querySelector('#time_search').value }
+                        date={ new Date() }
+                    />
+                )
             }
         </ul>
         <footer>
