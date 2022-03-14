@@ -1,6 +1,9 @@
-import Nanka from './dokoka';
+// import Nanka from './dokoka';
 
 function App() {
+    const now = new Date();
+    const timestamp = `${now.getHours()}:${now.getMinutes()}`;
+
     return (<>
         <header>時刻表</header>
         <select name="route" id="route">
@@ -10,17 +13,18 @@ function App() {
         </select>
         <ul id="timetable_list">
             {
-                new Array(3).map((_, k) =>
-                    <Nanka
-                        key={ k }
-                        route={ document.querySelector('#route').value }
-                        start={ new Date() }
-                    />
-                )
+                // new Array(3).map((_, k) =>
+                //     <Nanka
+                //         key={ k }
+                //         route={ document.querySelector('#route').value }
+                //         start={ document.querySelector('#time_search').value }
+                //         date={ new Date() }
+                //     />
+                // )
             }
         </ul>
         <footer>
-            <input type="time" name="time_search" id="time_search" />
+            <input type="time" name="time_search" id="time_search" value={ timestamp } required />
             <button>設定</button>
         </footer>
     </>);
