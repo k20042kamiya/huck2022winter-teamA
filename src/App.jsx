@@ -1,4 +1,5 @@
 // import Nanka from './dokoka';
+import './test.css'
 
 function App() {
     const now = new Date();
