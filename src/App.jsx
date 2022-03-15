@@ -22,6 +22,7 @@ function App() {
             <option value="1">高蔵寺行き(環状線)</option>
             <option value="2">藤が丘行き(リニモ)</option>
         </select>
+        <input type="time" name="time_search" id="time_search" value={ timeSearchGet } onChange={ hcGene(timeSearchSet) } required />
         <div id="weather">{ weatherGet }</div>
         <ul id="timetable_list">
             {
@@ -35,10 +36,6 @@ function App() {
                 // )
             }
         </ul>
-        <footer>
-            <input type="time" name="time_search" id="time_search" value={ timeSearchGet } onChange={ hcGene(timeSearchSet) } required />
-            <button>設定</button>
-        </footer>
     </>);
 }
 
