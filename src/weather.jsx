@@ -1,17 +1,19 @@
 import React from 'react';
 
 async function getWether () {
-    const codelist = require('./data/weathercode_WMO.json');
+    const codelist = require('./data/wcode_and_icon.json');
     const { current_weather } = await getAPI('https://api.open-meteo.com/v1/forecast', {
         longitude: 137.1098,
         latitude: 35.1823,
         timezone: 'Asia/Tokyo',
         current_weather: true
     });
+    const [weatherName, iconName] = codelist[current_weather.weathercode];
 
     return (
         <>
-            { codelist[current_weather.weathercode] }<br/>
+            <img src={ `/weather_icon/${iconName}` } alt={ weatherName } width="50" height="50"/>
+            { weatherName }
             { current_weather.temperature }℃
         </>
     );

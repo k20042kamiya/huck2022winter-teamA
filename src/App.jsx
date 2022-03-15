@@ -12,10 +12,8 @@ function App() {
     const [weatherGet, weatherSet] = useState(<></>);
 
     useEffect(() => {
-        getWether().then(ret => {
-            weatherSet(ret);
-        });
-    },[])
+        getWether().then(ret => weatherSet(ret));
+    }, []);
 
     return (<>
         <header>時刻表</header>
