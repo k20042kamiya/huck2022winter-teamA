@@ -6,7 +6,7 @@ function App() {
     const timestamp = `${now.getHours()}:${now.getMinutes()}`;
 
     return (<>
-        <header>時刻表</header>
+        <header><h1>時刻表</h1></header>
         <select name="route" id="route">
             <option value="0">岡崎行き(環状線)</option>
             <option value="1">高蔵寺行き(環状線)</option>
@@ -25,8 +25,9 @@ function App() {
             }
         </ul>
         <footer>
-            <input type="time" name="time_search" id="time_search" value={ timestamp } required />
-            <button>設定</button>
+            <p class="time">時刻検索</p>
+            <input type="time" name="time_search" id="time_search" class="timeinput" value={ timestamp } required />
+            <button class="button">設定</button>
         </footer>
     </>);
 }
