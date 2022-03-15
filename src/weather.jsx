@@ -12,9 +12,9 @@ async function getWether () {
 
     return (
         <>
-            <img src={ `/weather_icon/${iconName}` } alt={ weatherName } width="50" height="50"/>
-            { weatherName }
-            { current_weather.temperature }℃
+            <img id='weather_icon' src={ `/weather_icon/${iconName}` } alt={ weatherName } width="50" height="50"/>
+            <div id='weather_name'>{ weatherName }</div>
+            <div id="weather_temprature">{ current_weather.temperature }℃</div>
         </>
     );
 }
