@@ -1,4 +1,4 @@
-// import Datatable from './Datatable';
+import Datatable from './Datatable';
 import { useState, useEffect } from 'react'
 import getWether from './weather';
 import JapaneseHoliday from './lib/japanese-holidays';
@@ -29,14 +29,14 @@ function App() {
         <div id="weather">{ weatherGet }</div>
         <ul id="timetable_list">
             {
-                // new Array(1).map((_, k) =>
-                //     <Datatable
-                //         key={ k }
-                //         route={ routeGet }
-                //         start={ timeSearchGet }
-                //         date={ now }
-                //     />
-                // )
+                 new Array(1).map((_, k) =>
+                     <Datatable
+                         key={ k }
+                         route={ routeGet }
+                         start={ timeSearchGet }
+                         date={ now }
+                     />
+                 )
             }
         </ul>
     </>);
