@@ -5,21 +5,25 @@ import getWether from './weather';
 import JapaneseHoliday from 'japanese-holidays';
 
 function App() {
+    const getDayName = (date, isHoliday) => isHoliday ? '祝' : ['日', '月', '火', '水', '木', '金', '土'][date.getDay()];
+    const hcGene = func => (e => func(e.target.value));
+    const changeTab = element => selectedTabSet(Number(element.target.dataset.index));
+
     const now = new Date();
     const timestamp = `${now.getHours()}:${now.getMinutes().toString().padStart(2, 0)}`;
     const isHoliday = JapaneseHoliday.isHoliday(now);
     const dateText = `${now.getMonth() + 1}月${now.getDate()}日（${getDayName(now, isHoliday)}）`;
     const tabs = ['余裕バス', '快適バス'];
+    const localItem = localStorage.getItem('route') ?? '0';
 
-    const hcGene = func => (e => func(e.target.value));
-    const changeTab = element => selectedTabSet(Number(element.target.dataset.index));
-    const [routeGet, routeSet] = useState('0');
+    const [routeGet, routeSet] = useState(localItem);
     const [timeSearchGet, timeSearchSet] = useState(timestamp);
     const [weatherGet, weatherSet] = useState(<></>);
     const [selectedTabGet, selectedTabSet] = useState(0);
-
+    
+    localStorage.setItem('route', routeGet);
     useEffect(() => getWether().then(ret => weatherSet(ret)), []);
-
+    
     return (<>
         <header>時刻表</header>
 
@@ -38,7 +42,7 @@ function App() {
         </div>
 
         <div className="weatherbox">
-            <div className="tab_wrapper">
+            <div id="tab_wrapper">
                 {
                     tabs.map((name, key) =>
                         <span className={`box-title ${selectedTabGet === key ? 'tab_front' : 'tab_back'}`} data-index={key} onClick={changeTab}>{name}</span>
@@ -63,12 +67,6 @@ function App() {
             <div id="weather" className="weather">{weatherGet}</div>
         </div>
     </>);
-}
-
-function getDayName(date, isHoliday) {
-    const day = date.getDay();
-    const dayName = ['日', '月', '火', '水', '木', '金', '土'];
-    return isHoliday ? '祝' : dayName[day];
 }
 
 export default App;

@@ -65,7 +65,7 @@ header {
     width: 270px;
     margin-top: 110px;
 }
-.weatherbox .tab_wrapper {
+#tab_wrapper {
     position: absolute;
     display: flex;
     column-gap: 3px;
@@ -86,7 +86,7 @@ header {
     cursor: pointer;
 }
 
-.tab_wrapper .tab_back {
+#tab_wrapper .tab_back {
     background: #ffffff;
     color: #0097A7;
     border: solid 3px #0097A7;
