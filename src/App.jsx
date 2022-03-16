@@ -1,10 +1,12 @@
 // import Datatable from './Datatable';
 import { useState, useEffect } from 'react'
 import getWether from './weather';
+import JapaneseHoliday from './lib/japanese-holidays';
 
 function App() {
     const now = new Date();
     const timestamp = `${now.getHours()}:${now.getMinutes().toString().padStart(2, 0)}`;
+    const dateText = `${now.getMonth() + 1}月${now.getDate()}日（${getHoliDay(now)}）`
 
     const hcGene = func => (e => func(e.target.value));
     const [routeGet, routeSet] = useState('0');
@@ -17,6 +19,7 @@ function App() {
 
     return (<>
         <header>時刻表</header>
+        <div id="today">{ dateText }</div>
         <select name="route" id="route" value={ routeGet } onChange={ hcGene(routeSet) }>
             <option value="0">岡崎行き(環状線)</option>
             <option value="1">高蔵寺行き(環状線)</option>
@@ -37,6 +40,13 @@ function App() {
             }
         </ul>
     </>);
+}
+
+function getHoliDay (date = new Date()) {
+    const day = date.getDay();
+    const dayName = ['日', '月', '火', '水', '木', '金', '土'];
+    const isHoliday = JapaneseHoliday.isHoliday(date);
+    return isHoliday ? '祝' : dayName[day];
 }
 
 export default App;
