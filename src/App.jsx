@@ -1,7 +1,7 @@
 import Datatable from './Datatable';
 import { useState, useEffect } from 'react'
 import getWether from './weather';
-import JapaneseHoliday from './lib/japanese-holidays';
+import JapaneseHoliday from 'japanese-holidays';
 
 function App() {
     const now = new Date();
