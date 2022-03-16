@@ -7,21 +7,23 @@ import JapaneseHoliday from 'japanese-holidays';
 function App() {
     const getDayName = (date, isHoliday) => isHoliday ? '祝' : ['日', '月', '火', '水', '木', '金', '土'][date.getDay()];
     const hcGene = func => (e => func(e.target.value));
-    const changeTab = element => selectedTabSet(Number(element.target.dataset.index));
+    const changeTab = element => selectedTabSet(element.target.dataset.index);
 
     const now = new Date();
     const timestamp = `${now.getHours()}:${now.getMinutes().toString().padStart(2, 0)}`;
     const isHoliday = JapaneseHoliday.isHoliday(now);
     const dateText = `${now.getMonth() + 1}月${now.getDate()}日（${getDayName(now, isHoliday)}）`;
     const tabs = ['余裕バス', '快適バス'];
-    const localItem = localStorage.getItem('route') ?? '0';
+    const localRoute = localStorage.getItem('route') ?? '0';
+    const localTab = localStorage.getItem('selectedTab') ?? '0';
 
-    const [routeGet, routeSet] = useState(localItem);
+    const [routeGet, routeSet] = useState(localRoute);
     const [timeSearchGet, timeSearchSet] = useState(timestamp);
     const [weatherGet, weatherSet] = useState(<></>);
-    const [selectedTabGet, selectedTabSet] = useState(0);
+    const [selectedTabGet, selectedTabSet] = useState(localTab);
     
     localStorage.setItem('route', routeGet);
+    localStorage.setItem('selectedTab', selectedTabGet);
     useEffect(() => getWether().then(ret => weatherSet(ret)), []);
     
     return (<>
@@ -45,7 +47,7 @@ function App() {
             <div id="tab_wrapper">
                 {
                     tabs.map((name, key) =>
-                        <span className={`box-title ${selectedTabGet === key ? 'tab_front' : 'tab_back'}`} data-index={key} onClick={changeTab}>{name}</span>
+                        <span className={`box-title ${selectedTabGet === String(key) ? 'tab_front' : 'tab_back'}`} data-index={key} onClick={changeTab}>{name}</span>
                     )
                 }
             </div>
