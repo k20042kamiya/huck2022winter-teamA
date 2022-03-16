@@ -6,15 +6,11 @@ function Datatime(props) {
     const Daia = Daiadata[props.date.getMonth() + 1][props.date.getDate() - 1];
     const day = props.date.getDay();
     const Horiday = props.isHoliday;
-    
-    const check_h = (day, date) => {
-        if (date) {
-            return 2;
-        } else if (day === 5) {
-            return 1;
-        } else {
-            return 0;
-        }
+
+    const check_h = (day, isHoliday) => {
+        if (isHoliday) return 2;
+        if (day === 5) return 1;
+        return 0;
     };
     const Daiacheck = check_h(day, Horiday);
     const timetableNamelist = [
@@ -22,13 +18,11 @@ function Datatime(props) {
         ['train_AikantoO_w.json', 'train_AikantoO_s.json', 'train_AikantoO_h.json'],
         ['train_LinertoF_w.json', 'train_LinertoF_s.json', 'train_LinertoF_h.json']
     ];
-    
-    
-    
+
     const timetableName = timetableNamelist[props.route][Daiacheck];
     const trainData = require(`./timetable/${timetableName}`);
 
-   
+
 
     const serchTime = (timetable, hour, minute, upper = true) => {
         if (timetable[hour] === undefined) return;
@@ -41,31 +35,22 @@ function Datatime(props) {
         }
     }
     const bustime = serchTime(data[Daia], hour, minute).split(":");
-    
+
     if (Daia < 3) {
         return (
-            <div>
-            <li>
-                最速バス出発時間
-                {serchTime(data[Daia], hour, minute)}
-                </li>
-                <li>
-                電車時刻表
-                {serchTime(trainData ,Number(bustime[0]),Number(bustime[1]))}
-                </li>
-            </div>
-        )
-    }else {
-        return (
-            <div>
-            <li>
-                本日は運休です
+            <li className='list_item'>
+                <div className='bustime_label'>最速バス出発時間</div>
+                <div className="bustime_data">{serchTime(data[Daia], hour, minute)}</div>
+                
+                <div className='train_label'>電車時刻表</div>
+                <div className="train_data">{serchTime(trainData, Number(bustime[0]), Number(bustime[1]))}</div>
             </li>
+        )
+    } else {
+        return (
             <li>
-                    電車時刻表
-                {serchTime(trainData ,hour, minute)}
-                </li>
-            </div>
+                <div className="rest_label">本日は運休です</div>
+            </li>
         )
     }
 }
