@@ -12,24 +12,16 @@ function App() {
     const tabs = ['余裕バス', '快適バス'];
 
     const hcGene = func => (e => func(e.target.value));
-    const makeTabArr = (length, index) => {
-        const array = new Array(length).fill('');
-        array[index] = 'tab_selected';
-        return array;
-    };
-    const changeTab = element => tabKeysSet(makeTabArr(tabs.length, element.target.dataset.index));
-
+    const changeTab = element => selectedTabSet(Number(element.target.dataset.index));
     const [routeGet, routeSet] = useState('0');
     const [timeSearchGet, timeSearchSet] = useState(timestamp);
     const [weatherGet, weatherSet] = useState(<></>);
-    const [tabKeysGet, tabKeysSet] = useState(['tab_selected', '']);
+    const [selectedTabGet, selectedTabSet] = useState(0);
 
-    useEffect(() => {
-        getWether().then(ret => weatherSet(ret));
-    }, []);
+    useEffect(() => getWether().then(ret => weatherSet(ret)), []);
 
     return (<>
-        <header><h1>時刻表</h1></header>
+        <header>時刻表</header>
 
         <div className="routebox">
             <p className="route-select">路線選択</p>
@@ -49,7 +41,7 @@ function App() {
             <div className="tab_wrapper">
                 {
                     tabs.map((name, key) =>
-                        <span className={`box-title ${tabKeysGet[key]}`} data-index={key} onClick={changeTab}>{name}</span>
+                        <span className={`box-title ${selectedTabGet === key ? 'tab_front' : 'tab_back'}`} data-index={key} onClick={changeTab}>{name}</span>
                     )
                 }
             </div>
@@ -60,6 +52,7 @@ function App() {
                         start={timeSearchGet}
                         date={now}
                         isHoliday={isHoliday}
+                        selectedTab={selectedTabGet}
                     />
                 }
             </ul>
