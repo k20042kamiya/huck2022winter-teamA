@@ -15,10 +15,10 @@ header {
     margin: 2em 0;
     padding-left: 10px;
     font-weight: bold;
-    top: 102px;
+    top: 52px;
     height: 50px;
     width: 140px;
-    border: solid 2px #a9a9a9;
+    border: solid 2px #dcdcdc;
 }
 
 .route-select{
@@ -36,11 +36,11 @@ header {
     margin: 2em 0;
     padding-left: 10px;
     font-weight: bold;
-    top: 102px;
+    top: 52px;
     left: 170px;
     height: 50px;
     width: 140px;
-    border: solid 2px #a9a9a9;
+    border: solid 2px #dcdcdc;
 }
 
 .time-select {
@@ -81,6 +81,7 @@ header {
 }
 
 .box1 {
+    position: relative;
     padding: 0.5em 1em;
     margin: 2em 0;
     padding-left: 10px;
@@ -91,13 +92,15 @@ header {
 }
 
 .today {
-    position: relative;
+    position: absolute;
     border-bottom: solid 2px #0097A7;
     padding-left: 30px;
     width: 110px;
+
 }
 .weather {
     position: absolute;
     padding-left: 50px;
-    top: 400px;
+    top: 35px;
+    left: 10px;
 }
