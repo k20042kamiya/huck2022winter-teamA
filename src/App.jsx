@@ -30,12 +30,14 @@ function App() {
         <div id="weather">{ weatherGet }</div>
         <ul id="timetable_list">
             {
+
                 <Datatable
                     route={ routeGet }
                     start={ timeSearchGet }
                     date={ now }
                     isHoliday={ isHoliday }
                 />
+
             }
         </ul>
     </>);

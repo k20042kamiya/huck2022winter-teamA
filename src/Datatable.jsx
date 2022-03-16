@@ -1,78 +1,74 @@
 function Datatime(props) {
     const data = require('./timetable/bus_AtoY.json');
     const Daiadata = require('./timetable/bus_calendar.json');
-    const AikantoK_h = require('./timetable/train_AikantoK_h.json');
-    const AikantoK_s = require('./timetable/train_AikantoK_s.json');
-    const AikantoK_w = require('./timetable/train_AikantoK_w.json');
-    const AikantoO_h = require('./timetable/train_AikantoO_h.json');
-    const AikantoO_s = require('./timetable/train_AikantoO_s.json');
-    const AikantoO_w = require('./timetable/train_AikantoO_w.json');
-    const LinimotoF_h = require('./timetable/train_LinertoF_h.json');
-    const LinimotoF_s = require('./timetable/train_LinertoF_s.json');
-    const LinimotoF_w = require('./timetable/train_LinertoF_w.json');
-    const splitTime = props.start.split(":");
-    const hour = parseInt(splitTime[0], 10);
-    const minute = parseInt(splitTime[1], 10);
-    const date = parseInt(props.date.getDate() - 1, 10);
-    const month = parseInt(props.date.getMonth() + 1, 10);
-    const Daia = Daiadata[month][date];
+
+    const [hour, minute] = props.start.split(":").map(Number);
+    const Daia = Daiadata[props.date.getMonth() + 1][props.date.getDate() - 1];
+    const day = props.date.getDay();
+    const Horiday = props.isHoliday;
     
-    // console.log(trainDaia_h);
-    console.log(date)
-    // console.log(serchDaia)
+    const check_h = (day, date) => {
+        if (date) {
+            return 2;
+        } else if (day === 5) {
+            return 1;
+        } else {
+            return 0;
+        }
+    };
+    const Daiacheck = check_h(day, Horiday);
+    const timetableNamelist = [
+        ['train_AikantoK_w.json', 'train_AikantoK_s.json', 'train_AikantoK_h.json'],
+        ['train_AikantoO_w.json', 'train_AikantoO_s.json', 'train_AikantoO_h.json'],
+        ['train_LinertoF_w.json', 'train_LinertoF_s.json', 'train_LinertoF_h.json']
+    ];
     
-    const serchTime = (timetable, hour, minute) => {
+    
+    
+    const timetableName = timetableNamelist[props.route][Daiacheck];
+    const trainData = require(`./timetable/${timetableName}`);
+
+   
+
+    const serchTime = (timetable, hour, minute, upper = true) => {
         if (timetable[hour] === undefined) return;
-        const nearMinute = timetable[hour].find(v => minute <= v);
+        const nearMinute = timetable[hour].find(v => upper ? minute <= v : minute >= v);
 
         if (nearMinute === undefined) {
-            return serchTime(timetable, hour + 1, 0);
+            return serchTime(timetable, upper ? hour + 1 : hour - 1, upper ? 0 : 59);
         } else {
             return `${hour}:${nearMinute.toString().padStart(2, 0)}`
         }
     }
-    console.log(serchTime(data[Daia], hour, minute))
-    const bustime = serchTime(data[Daia], hour, minute).split(":")
-    const train_check = (route) => {
-                if (route === "0") {
-                    return serchTime(AikantoK_h, hour, bustime[1] + 10)
-                }
-                else if (route === "0") {
-                    return serchTime(AikantoO_h, hour, bustime[1] + 10)
-        }
-             else {
-                return serchTime(LinimotoF_h, hour,bustime[1] + 10)
-            }
-        
-    }
+    const bustime = serchTime(data[Daia], hour, minute).split(":");
     
-    console.log(typeof(bustime[1]))
     if (Daia < 3) {
         return (
             <div>
             <li>
                 最速バス出発時間
                 {serchTime(data[Daia], hour, minute)}
-            </li>
-            <li>
-                    電車時刻表
-                {train_check(props.route)}
+                </li>
+                <li>
+                電車時刻表
+                {serchTime(trainData ,Number(bustime[0]),Number(bustime[1]))}
                 </li>
             </div>
-
         )
     }else {
         return (
             <div>
-                <li>
+            <li>
                 本日は運休です
-                {/* 電車時刻表 {serchTime(trainDaia, hour, minute)} */}
             </li>
+            <li>
+                    電車時刻表
+                {serchTime(trainData ,hour, minute)}
+                </li>
             </div>
-       
         )
     }
 }
 
-    // console.log(serchTime(data, hour, minute))
+
 export default Datatime;
