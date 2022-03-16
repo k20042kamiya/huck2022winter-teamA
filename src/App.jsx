@@ -9,11 +9,20 @@ function App() {
     const timestamp = `${now.getHours()}:${now.getMinutes().toString().padStart(2, 0)}`;
     const isHoliday = JapaneseHoliday.isHoliday(now);
     const dateText = `${now.getMonth() + 1}月${now.getDate()}日（${getDayName(now, isHoliday)}）`;
+    const tabs = ['余裕バス', '快適バス'];
 
     const hcGene = func => (e => func(e.target.value));
+    const makeTabArr = (length, index) => {
+        const array = new Array(length).fill('');
+        array[index] = 'tab_selected';
+        return array;
+    };
+    const changeTab = element => tabKeysSet(makeTabArr(tabs.length, element.target.dataset.index));
+
     const [routeGet, routeSet] = useState('0');
     const [timeSearchGet, timeSearchSet] = useState(timestamp);
     const [weatherGet, weatherSet] = useState(<></>);
+    const [tabKeysGet, tabKeysSet] = useState(['tab_selected', '']);
 
     useEffect(() => {
         getWether().then(ret => weatherSet(ret));
@@ -22,45 +31,48 @@ function App() {
     return (<>
         <header><h1>時刻表</h1></header>
 
-        <div class="routebox">
-            <p class="route-select">路線選択</p>
-            <select name="route" id="route" class="route" value={ routeGet } onChange={ hcGene(routeSet) }>
+        <div className="routebox">
+            <p className="route-select">路線選択</p>
+            <select name="route" id="route" className="route" value={routeGet} onChange={hcGene(routeSet)}>
                 <option value="0">岡崎行き(環状線)</option>
                 <option value="1">高蔵寺行き(環状線)</option>
                 <option value="2">藤が丘行き(リニモ)</option>
             </select>
         </div>
-        
-        <div class="timebox">
-            <p class="time-select">時間選択</p>
-            <input type="time" name="time_search" id="time_search" class="time_search" value={ timeSearchGet } onChange={ hcGene(timeSearchSet) } required />
+
+        <div className="timebox">
+            <p className="time-select">時間選択</p>
+            <input type="time" name="time_search" id="time_search" className="time_search" value={timeSearchGet} onChange={hcGene(timeSearchSet)} required/>
         </div>
-        
 
-        <div class="weatherbox">
-        <span class="box-title">次のバス</span>
-        <ul id="timetable_list" class="timetable_list">
-            {
-
-                <Datatable
-                    route={ routeGet }
-                    start={ timeSearchGet }
-                    date={ now }
-                    isHoliday={ isHoliday }
-                />
-
-            }
+        <div className="weatherbox">
+            <div className="tab_wrapper">
+                {
+                    tabs.map((name, key) =>
+                        <span className={`box-title ${tabKeysGet[key]}`} data-index={key} onClick={changeTab}>{name}</span>
+                    )
+                }
+            </div>
+            <ul id="timetable_list" className="timetable_list">
+                {
+                    <Datatable
+                        route={routeGet}
+                        start={timeSearchGet}
+                        date={now}
+                        isHoliday={isHoliday}
+                    />
+                }
             </ul>
         </div>
 
-        <div class="box1">
-            <div id="today" class="today">{ dateText }</div>
-            <div id="weather" class="weather">{ weatherGet }</div>
+        <div className="box1">
+            <div id="today" className="today">{dateText}</div>
+            <div id="weather" className="weather">{weatherGet}</div>
         </div>
     </>);
 }
 
-function getDayName (date, isHoliday) {
+function getDayName(date, isHoliday) {
     const day = date.getDay();
     const dayName = ['日', '月', '火', '水', '木', '金', '土'];
     return isHoliday ? '祝' : dayName[day];
