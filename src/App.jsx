@@ -1,3 +1,4 @@
+import './test.css'
 import Datatable from './Datatable';
 import { useState, useEffect } from 'react'
 import getWether from './weather';
@@ -19,16 +20,26 @@ function App() {
     }, []);
 
     return (<>
-        <header>時刻表</header>
-        <div id="today">{ dateText }</div>
-        <select name="route" id="route" value={ routeGet } onChange={ hcGene(routeSet) }>
-            <option value="0">岡崎行き(環状線)</option>
-            <option value="1">高蔵寺行き(環状線)</option>
-            <option value="2">藤が丘行き(リニモ)</option>
-        </select>
-        <input type="time" name="time_search" id="time_search" value={ timeSearchGet } onChange={ hcGene(timeSearchSet) } required />
-        <div id="weather">{ weatherGet }</div>
-        <ul id="timetable_list">
+        <header><h1>時刻表</h1></header>
+
+        <div class="routebox">
+            <p class="route-select">路線選択</p>
+            <select name="route" id="route" class="route" value={ routeGet } onChange={ hcGene(routeSet) }>
+                <option value="0">岡崎行き(環状線)</option>
+                <option value="1">高蔵寺行き(環状線)</option>
+                <option value="2">藤が丘行き(リニモ)</option>
+            </select>
+        </div>
+        
+        <div class="timebox">
+            <p class="time-select">時間選択</p>
+            <input type="time" name="time_search" id="time_search" class="time_search" value={ timeSearchGet } onChange={ hcGene(timeSearchSet) } required />
+        </div>
+        
+
+        <div class="weatherbox">
+        <span class="box-title">次のバス</span>
+        <ul id="timetable_list" class="timetable_list">
             {
 
                 <Datatable
@@ -39,7 +50,13 @@ function App() {
                 />
 
             }
-        </ul>
+            </ul>
+        </div>
+
+        <div class="box1">
+            <div id="today" class="today">{ dateText }</div>
+            <div id="weather" class="weather">{ weatherGet }</div>
+        </div>
     </>);
 }
 
