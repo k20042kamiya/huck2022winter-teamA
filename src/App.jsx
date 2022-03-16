@@ -6,7 +6,8 @@ import JapaneseHoliday from './lib/japanese-holidays';
 function App() {
     const now = new Date();
     const timestamp = `${now.getHours()}:${now.getMinutes().toString().padStart(2, 0)}`;
-    const dateText = `${now.getMonth() + 1}月${now.getDate()}日（${getHoliDay(now)}）`
+    const isHoliday = JapaneseHoliday.isHoliday(now);
+    const dateText = `${now.getMonth() + 1}月${now.getDate()}日（${getDayName(now, isHoliday)}）`;
 
     const hcGene = func => (e => func(e.target.value));
     const [routeGet, routeSet] = useState('0');
@@ -29,23 +30,20 @@ function App() {
         <div id="weather">{ weatherGet }</div>
         <ul id="timetable_list">
             {
-                 new Array(1).map((_, k) =>
-                     <Datatable
-                         key={ k }
-                         route={ routeGet }
-                         start={ timeSearchGet }
-                         date={ now }
-                     />
-                 )
+                <Datatable
+                    route={ routeGet }
+                    start={ timeSearchGet }
+                    date={ now }
+                    isHoliday={ isHoliday }
+                />
             }
         </ul>
     </>);
 }
 
-function getHoliDay (date = new Date()) {
+function getDayName (date, isHoliday) {
     const day = date.getDay();
     const dayName = ['日', '月', '火', '水', '木', '金', '土'];
-    const isHoliday = JapaneseHoliday.isHoliday(date);
     return isHoliday ? '祝' : dayName[day];
 }
 
