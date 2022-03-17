@@ -69,8 +69,12 @@ function Datatime(props) {
                     <div className="bustime_next">発です</div>
                 </div>
                 <div className="item_sub">
-                    駅での待ち時間〇〇分<br/>
-                    電車出発時間{traincheck(bustimeTable, traintimeTable)}
+                    <span className="lebel">駅での待ち時間</span>
+                    <span className="value">〇〇分</span>
+                </div>
+                <div className="item_sub">
+                    <span className="lebel">電車出発時間</span>
+                    <span className="value">{traincheck(bustimeTable, traintimeTable)}</span>
                 </div>
             </div>
         )
