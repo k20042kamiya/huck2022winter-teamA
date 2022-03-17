@@ -20,26 +20,29 @@ function App() {
     }, []);
 
     return (<>
-        <header><h1>時刻表</h1></header>
+        <header>時刻表</header>
 
-        <div class="routebox">
-            <p class="route-select">路線選択</p>
-            <select name="route" id="route" class="route" value={ routeGet } onChange={ hcGene(routeSet) }>
-                <option value="0">岡崎行き(環状線)</option>
-                <option value="1">高蔵寺行き(環状線)</option>
-                <option value="2">藤が丘行き(リニモ)</option>
-            </select>
+        <div class="flex_test-box">
+            <div class="routebox">
+                <p class="route-select">路線選択</p>
+                <select name="route" id="route" value={ routeGet } onChange={ hcGene(routeSet) }>
+                    <option value="0">岡崎行き(環状線)</option>
+                    <option value="1">高蔵寺行き(環状線)</option>
+                    <option value="2">藤が丘行き(リニモ)</option>
+                </select>
+            </div>
+            
+            <div class="timebox">
+                <p class="time-select">時間選択</p>
+                <input type="time" name="time_search" id="time_search" value={ timeSearchGet } onChange={ hcGene(timeSearchSet) } required />
+            </div>
         </div>
         
-        <div class="timebox">
-            <p class="time-select">時間選択</p>
-            <input type="time" name="time_search" id="time_search" class="time_search" value={ timeSearchGet } onChange={ hcGene(timeSearchSet) } required />
-        </div>
         
 
-        <div class="weatherbox">
+        <div class="timetablebox">
         <span class="box-title">次のバス</span>
-        <ul id="timetable_list" class="timetable_list">
+        <ul id="timetable_list">
             {
                 <Datatable
                     route={ routeGet }

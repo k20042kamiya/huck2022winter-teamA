@@ -2,70 +2,74 @@ header {
     width: 100%;
     height: 70px;
     background-color: black;
-    position: relative;
     color: azure;
     font-size: 50px;
     border-bottom: 8px double #0097A7;
     padding: 3px;
 }
 
+.flex_test-box {
+    background-color: #ffffff;
+    padding:  10px;
+    display: flex;
+}
+
+.flex_test-item {
+    padding: 10px;
+    color:  black;
+    margin:  10px;
+    border-radius:  5px;
+    
+}
+
 .routebox {
-    position: absolute;
     padding: 0.5em 1em;
     margin: 2em 0;
     padding-left: 10px;
     font-weight: bold;
-    top: 52px;
-    height: 50px;
-    width: 140px;
     border: solid 2px #dcdcdc;
+    margin-top: -10px;
+    margin-bottom: 150px;
 }
-
-.route-select{
-    position: absolute;
-    top: 0px;
+.route-select {
+    font-size: 10px;
+    margin-top: -4px;
 }
-.route {
-    position: absolute;
-    top: 30px;
+#route{
+    margin-top: -20px;
 }
 
 .timebox {
-    position: absolute;
     padding: 0.5em 1em;
     margin: 2em 0;
     padding-left: 10px;
     font-weight: bold;
-    top: 52px;
-    left: 170px;
-    height: 50px;
-    width: 140px;
     border: solid 2px #dcdcdc;
+    margin-top: -10px;
+    margin-bottom: 150px;
 }
 
-.time-select {
-    position: absolute;
-    top: 0px;
-    left: 50px;
+.time-select{
+    font-size: 10px;
+    margin-top: -4px;
 }
-.time_search {
-    position: absolute;
-    top: 30px;
-    left: 55px;
+#time_search{
+    margin-top: -20px;
 }
 
-.timetable_list {
+#timetable_list {
     list-style-type: none
 }
-.weatherbox {
+.timetablebox {
     position: relative;
+    width: 300px;
     margin: 2em 0;
     padding: 0.5em 1em;
     border: solid 3px #0097A7;
-    width: 270px;
-    margin-top: 110px;
+    margin-top: 0px;
+    margin-bottom: 100px;
 }
-.weatherbox .box-title {
+.timetablebox .box-title {
     position: absolute;
     display: inline-block;
     top: -27px;
@@ -78,10 +82,11 @@ header {
     color: #ffffff;
     font-weight: bold;
     border-radius: 5px 5px 0 0;
+    
 }
 
 .box1 {
-    position: relative;
+
     padding: 0.5em 1em;
     margin: 2em 0;
     padding-left: 10px;
@@ -92,15 +97,11 @@ header {
 }
 
 .today {
-    position: absolute;
     border-bottom: solid 2px #0097A7;
     padding-left: 30px;
     width: 110px;
 
 }
 .weather {
-    position: absolute;
     padding-left: 50px;
-    top: 35px;
-    left: 10px;
 }
