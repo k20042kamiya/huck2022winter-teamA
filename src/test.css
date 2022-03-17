@@ -65,11 +65,15 @@ header {
     width: 270px;
     margin-top: 110px;
 }
-.weatherbox .box-title {
+#tab_wrapper {
     position: absolute;
-    display: inline-block;
+    display: flex;
+    column-gap: 3px;
     top: -27px;
     left: -3px;
+}
+
+.weatherbox .box-title {
     padding: 0 9px;
     height: 25px;
     line-height: 25px;
@@ -78,6 +82,15 @@ header {
     color: #ffffff;
     font-weight: bold;
     border-radius: 5px 5px 0 0;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+#tab_wrapper .tab_back {
+    background: #ffffff;
+    color: #0097A7;
+    border: solid 3px #0097A7;
+    border-bottom: none;
 }
 
 .box1 {
