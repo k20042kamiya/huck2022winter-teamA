@@ -28,7 +28,8 @@ function Datatime(props) {
 
     // 第4引数にfalseを渡すと入れた時間の直前のバス/電車を返すようにしました
     const serchTime = (timetable, hour, minute, upper = true) => {
-        if (timetable[hour] === undefined) return;
+        if (upper ? 24 <= hour : hour < 0) return;
+        if (timetable[hour] === undefined) return serchTime(timetable, upper ? hour + 1 : hour - 1, upper ? 0 : 59, upper);
         const nearMinute = upper ?
             timetable[hour].find(v => minute <= v) :
             [...timetable[hour]].reverse().find(v => minute >= v);
