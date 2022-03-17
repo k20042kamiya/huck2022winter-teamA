@@ -1,3 +1,5 @@
+
+// npm i
 function Datatime(props) {
     const data = require('./timetable/bus_AtoY.json');
     const Daiadata = require('./timetable/bus_calendar.json');
@@ -48,17 +50,17 @@ function Datatime(props) {
             const Daia = serchB.split(':').map(Number);
             return serchTime(trainData, Daia[0], Daia[1]);
         } else {
-            if (serchT === undefined) return `今日の電車はもうありません`;
+            if (serchT === undefined) return `この時間電車はありません`;
             return traintimeTable;
         }
     }
 
     const bustime = (selectedTab, serchB, serchT) => {
         if (selectedTab === `0`) {
-            return bustimeTable ?? 'バスもうありません';
+            return bustimeTable ?? 'この時間のバスはありません';
         }
         if (selectedTab === `1`) {
-            if (serchB === undefined) return 'バスもうありません';
+            if (serchB === undefined) return 'この時間のバスはありません';
             else if (serchT === undefined) return serchB;
             else {
                 const bus = serchB.split(':').map(Number);
@@ -67,7 +69,6 @@ function Datatime(props) {
                 console.log(train);
                 console.log(serchTime(data[Daia], train[0], train[1], false));
                 return serchTime(data[Daia], train[0], train[1], false);
-                
             }
         }
     }
