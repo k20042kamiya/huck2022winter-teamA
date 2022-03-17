@@ -48,7 +48,7 @@ function Datatime(props) {
             if (serchT === undefined) return `今日の電車はもうありません`;
             if (serchB === undefined) return serchT;
             const Daia = serchB.split(':').map(Number);
-            return serchTime(trainData, Daia[0], Daia[1]);
+            return serchTime(trainData, Daia[0], Daia[1] + 10);
         } else {
             if (serchT === undefined) return `この時間電車はありません`;
             return traintimeTable;
