@@ -1,78 +1,85 @@
 function Datatime(props) {
     const data = require('./timetable/bus_AtoY.json');
     const Daiadata = require('./timetable/bus_calendar.json');
-    const AikantoK_h = require('./timetable/train_AikantoK_h.json');
-    const AikantoK_s = require('./timetable/train_AikantoK_s.json');
-    const AikantoK_w = require('./timetable/train_AikantoK_w.json');
-    const AikantoO_h = require('./timetable/train_AikantoO_h.json');
-    const AikantoO_s = require('./timetable/train_AikantoO_s.json');
-    const AikantoO_w = require('./timetable/train_AikantoO_w.json');
-    const LinimotoF_h = require('./timetable/train_LinertoF_h.json');
-    const LinimotoF_s = require('./timetable/train_LinertoF_s.json');
-    const LinimotoF_w = require('./timetable/train_LinertoF_w.json');
-    const splitTime = props.start.split(":");
-    const hour = parseInt(splitTime[0], 10);
-    const minute = parseInt(splitTime[1], 10);
-    const date = parseInt(props.date.getDate() - 1, 10);
-    const month = parseInt(props.date.getMonth() + 1, 10);
-    const Daia = Daiadata[month][date];
-    
-    // console.log(trainDaia_h);
-    console.log(date)
-    // console.log(serchDaia)
-    
-    const serchTime = (timetable, hour, minute) => {
+
+    const [hour, minute] = props.start.split(":").map(Number);
+    const Daia = Daiadata[props.date.getMonth() + 1][props.date.getDate() - 1];
+    const day = props.date.getDay();
+    const Horiday = props.isHoliday;
+
+    const check_h = (day, isHoliday) => {
+        if (isHoliday) return 2;
+        if (day === 5) return 1;
+        return 0;
+    };
+
+    const Daiacheck = check_h(day, Horiday);
+
+    const timetableNamelist = [
+        ['train_AikantoK_w.json', 'train_AikantoK_s.json', 'train_AikantoK_h.json'],
+        ['train_AikantoO_w.json', 'train_AikantoO_s.json', 'train_AikantoO_h.json'],
+        ['train_LinertoF_w.json', 'train_LinertoF_s.json', 'train_LinertoF_h.json']
+    ];
+
+    const timetableName = timetableNamelist[props.route][Daiacheck];
+    const trainData = require(`./timetable/${timetableName}`);
+
+    // 第4引数にfalseを渡すと入れた時間の直前のバス/電車を返すようにしました
+    const serchTime = (timetable, hour, minute, upper = true) => {
         if (timetable[hour] === undefined) return;
-        const nearMinute = timetable[hour].find(v => minute <= v);
+        const nearMinute = upper ?
+            timetable[hour].find(v => minute <= v) :
+            timetable[hour].reverce().find(v => minute >= v);
 
         if (nearMinute === undefined) {
-            return serchTime(timetable, hour + 1, 0);
+            return serchTime(timetable, upper ? hour + 1 : hour - 1, upper ? 0 : 59);
         } else {
             return `${hour}:${nearMinute.toString().padStart(2, 0)}`
         }
     }
-    console.log(serchTime(data[Daia], hour, minute))
-    const bustime = serchTime(data[Daia], hour, minute).split(":")
-    const train_check = (route) => {
-                if (route === "0") {
-                    return serchTime(AikantoK_h, hour, bustime[1] + 10)
-                }
-                else if (route === "0") {
-                    return serchTime(AikantoO_h, hour, bustime[1] + 10)
-        }
-             else {
-                return serchTime(LinimotoF_h, hour,bustime[1] + 10)
-            }
-        
-    }
-    
-    console.log(typeof(bustime[1]))
-    if (Daia < 3) {
-        return (
-            <div>
-            <li>
-                最速バス出発時間
-                {serchTime(data[Daia], hour, minute)}
-            </li>
-            <li>
-                    電車時刻表
-                {train_check(props.route)}
-                </li>
-            </div>
+    const bustimeTable = serchTime(data[Daia], hour, minute)
+    const traintimeTable =  serchTime(trainData, hour, minute)
 
-        )
-    }else {
+    const traincheck = (serchB, serchT) => {
+        if (serchT === undefined) return `今日の電車はもうありません`;
+        if (serchB === undefined) return serchT;
+
+        const Daia = serchB.split(':').map(Number);
+        return serchTime(trainData, Daia[0], Daia[1] + 10);
+    }
+
+    const bustime = bustimeTable ?? '今日のバスはもうありません';
+
+    if (Daia === 3) {
         return (
-            <div>
-                <li>
-                本日は運休です
-                {/* 電車時刻表 {serchTime(trainDaia, hour, minute)} */}
+            <li>
+                <div className="rest_label">本日は運休です</div>
+                <div className='train_label'>電車時刻表</div>
+                <div className="train_data">{traintimeTable}</div>
             </li>
-            </div>
-       
+        );
+    }
+
+    if (true) {// <-設定によって最速かどうか切り替える
+        return (
+            <li className='list_item'>
+                <div className='bustime_label'>最速バス出発時間</div>
+                <div className="bustime_data">{bustime}</div>
+                <div className='train_label'>最速電車出発時間</div>
+                <div className="train_data">{traincheck(bustimeTable, traintimeTable)}</div>
+            </li>
+        )
+    } else {
+        return (
+            <li className='list_item'>
+                <div className='bustime_label'>適正バス出発時間</div>
+                <div className="bustime_data">{bustime}</div>
+                <div className='train_label'>最速電車出発時間</div>
+                <div className="train_data">{traincheck(bustimeTable, traintimeTable)}</div>
+            </li>
         )
     }
 }
 
-    // console.log(serchTime(data, hour, minute))
+
 export default Datatime;

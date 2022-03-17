@@ -62,18 +62,23 @@ header {
 }
 .timetablebox {
     position: relative;
-    width: 300px;
     margin: 2em 0;
     padding: 0.5em 1em;
     border: solid 3px #0097A7;
-    margin-top: 0px;
-    margin-bottom: 100px;
+    width: 270px;
+    margin-top: -110px;
 }
-.timetablebox .box-title {
+#tab_wrapper {
     position: absolute;
-    display: inline-block;
+    display: flex;
+    column-gap: 3px;
     top: -27px;
     left: -3px;
+}
+
+.timetablebox .box-title {
+    /* top: -27px;
+    left: -3px; */
     padding: 0 9px;
     height: 25px;
     line-height: 25px;
@@ -82,11 +87,17 @@ header {
     color: #ffffff;
     font-weight: bold;
     border-radius: 5px 5px 0 0;
-    
+    box-sizing: border-box;
+    cursor: pointer;
+}
+#tab_wrapper .tab_back {
+    background: #ffffff;
+    color: #0097A7;
+    border: solid 3px #0097A7;
+    border-bottom: none;
 }
 
 .box1 {
-
     padding: 0.5em 1em;
     margin: 2em 0;
     padding-left: 10px;
