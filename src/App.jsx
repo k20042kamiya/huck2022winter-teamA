@@ -1,4 +1,5 @@
 import './test.css'
+import './listItem.css'
 import Datatable from './Datatable';
 import { useState, useEffect } from 'react'
 import getWether from './weather';
@@ -51,7 +52,7 @@ function App() {
                     )
                 }
             </div>
-            <ul id="timetable_list" className="timetable_list">
+            <div id="timetable_list" className="timetable_list">
                 {
                     <Datatable
                         route={routeGet}
@@ -61,7 +62,7 @@ function App() {
                         selectedTab={selectedTabGet}
                     />
                 }
-            </ul>
+            </div>
         </div>
 
         <div id="weatherbox">

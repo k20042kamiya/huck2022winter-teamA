@@ -6,16 +6,16 @@ header {
     font-size: 50px;
     border-bottom: 8px double #0097A7;
     padding: 3px;
-    text-align:center;
+    text-align: center;
     margin: auto;
 }
 
 #flex_test-box {
     background-color: #ffffff;
-    padding:  10px;
+    padding: 10px;
     display: flex;
-    flex-direction:row;
-    flex-wrap:nowrap;
+    flex-direction: row;
+    flex-wrap: nowrap;
     text-align: center;
 }
 
@@ -25,7 +25,7 @@ header {
     padding-left: 10px;
     font-weight: bold;
     border: solid 2px #dcdcdc;
-    margin:0 auto;
+    margin: 0 auto;
     margin-top: -10px;
     margin-right: 0px;
 }
@@ -35,7 +35,7 @@ header {
     margin-top: -4px;
 }
 
-#route{
+#route {
     margin-top: -10px;
 }
 
@@ -46,22 +46,23 @@ header {
     font-weight: bold;
     border: solid 2px #dcdcdc;
     margin-bottom: 150px;
-    margin:0 auto;
+    margin: 0 auto;
     margin-top: -10px;
     margin-left: 0px;
 }
 
-#time-select{
+#time-select {
     font-size: 10px;
     margin-top: -5px;
 }
 
-#time_search{
+#time_search {
     margin-top: -30px;
 }
 
 #timetable_list {
-    list-style-type: none
+    display: flex;
+    flex-direction: column;
 }
 
 #timetablebox {
