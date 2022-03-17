@@ -44,7 +44,6 @@ function App() {
             </div>
         </div>
 
-
         <div className="timetablebox">
             <div id="tab_wrapper">
                 {
