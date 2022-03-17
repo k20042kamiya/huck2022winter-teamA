@@ -6,7 +6,7 @@ function Datatime(props) {
     const Daia = Daiadata[props.date.getMonth() + 1][props.date.getDate() - 1];
     const day = props.date.getDay();
     const Horiday = props.isHoliday;
-
+    const selectedTab = props.selectedTab;
     const check_h = (day, isHoliday) => {
         if (isHoliday) return 2;
         if (day === 5) return 1;
@@ -16,8 +16,8 @@ function Datatime(props) {
     const Daiacheck = check_h(day, Horiday);
 
     const timetableNamelist = [
-        ['train_AikantoK_w.json', 'train_AikantoK_s.json', 'train_AikantoK_h.json'],
         ['train_AikantoO_w.json', 'train_AikantoO_s.json', 'train_AikantoO_h.json'],
+        ['train_AikantoK_w.json', 'train_AikantoK_s.json', 'train_AikantoK_h.json'],
         ['train_LinertoF_w.json', 'train_LinertoF_s.json', 'train_LinertoF_h.json']
     ];
 
@@ -29,26 +29,50 @@ function Datatime(props) {
         if (timetable[hour] === undefined) return;
         const nearMinute = upper ?
             timetable[hour].find(v => minute <= v) :
-            timetable[hour].reverce().find(v => minute >= v);
+            [...timetable[hour]].reverse().find(v => minute >= v);
 
         if (nearMinute === undefined) {
-            return serchTime(timetable, upper ? hour + 1 : hour - 1, upper ? 0 : 59);
+            return serchTime(timetable, upper ? hour + 1 : hour - 1, upper ? 0 : 59, upper);
         } else {
-            return `${hour}:${nearMinute.toString().padStart(2, 0)}`
+            return `${hour}:${nearMinute.toString().padStart(2, 0)}`;
         }
     }
-    const bustimeTable = serchTime(data[Daia], hour, minute)
-    const traintimeTable =  serchTime(trainData, hour, minute)
+
+    const bustimeTable = serchTime(data[Daia], hour, minute);
+    const traintimeTable = serchTime(trainData, hour, minute);
 
     const traincheck = (serchB, serchT) => {
-        if (serchT === undefined) return `今日の電車はもうありません`;
-        if (serchB === undefined) return serchT;
-
-        const Daia = serchB.split(':').map(Number);
-        return serchTime(trainData, Daia[0], Daia[1] + 10);
+        if (selectedTab === "0") {
+            if (serchT === undefined) return `今日の電車はもうありません`;
+            if (serchB === undefined) return serchT;
+            const Daia = serchB.split(':').map(Number);
+            return serchTime(trainData, Daia[0], Daia[1]);
+        } else {
+            if (serchT === undefined) return `今日の電車はもうありません`;
+            return traintimeTable;
+        }
     }
 
-    const bustime = bustimeTable ?? '今日のバスはもうありません';
+    const bustime = (selectedTab, serchB, serchT) => {
+        if (selectedTab === `0`) {
+            return bustimeTable ?? 'バスもうありません';
+        }
+        if (selectedTab === `1`) {
+            if (serchB === undefined) return 'バスもうありません';
+            else if (serchT === undefined) return serchB;
+            else {
+                const bus = serchB.split(':').map(Number);
+                console.log(bus); 
+                const train = serchTime(trainData, bus[0], bus[1] - 10).split(":").map(Number);
+                console.log(train);
+                console.log(serchTime(data[Daia], train[0], train[1], false));
+                return serchTime(data[Daia], train[0], train[1], false);
+                
+            }
+        }
+    }
+
+    console.log(serchTime(data[Daia], 14, 13, false))
 
     if (Daia === 3) {
         return (
@@ -58,22 +82,11 @@ function Datatime(props) {
                 <div className="train_data">{traintimeTable}</div>
             </li>
         );
-    }
-
-    if (true) {// <-設定によって最速かどうか切り替える
-        return (
-            <li className='list_item'>
-                <div className='bustime_label'>最速バス出発時間</div>
-                <div className="bustime_data">{bustime}</div>
-                <div className='train_label'>最速電車出発時間</div>
-                <div className="train_data">{traincheck(bustimeTable, traintimeTable)}</div>
-            </li>
-        )
     } else {
         return (
             <li className='list_item'>
                 <div className='bustime_label'>適正バス出発時間</div>
-                <div className="bustime_data">{bustime}</div>
+                <div className="bustime_data">{bustime(selectedTab, bustimeTable, traintimeTable)}</div>
                 <div className='train_label'>最速電車出発時間</div>
                 <div className="train_data">{traincheck(bustimeTable, traintimeTable)}</div>
             </li>
