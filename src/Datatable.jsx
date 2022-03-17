@@ -38,7 +38,7 @@ function Datatime(props) {
         }
     }
     const bustimeTable = serchTime(data[Daia], hour, minute)
-    const traintimeTable =  serchTime(trainData, hour, minute)
+    const traintimeTable = serchTime(trainData, hour, minute)
 
     const traincheck = (serchB, serchT) => {
         if (serchT === undefined) return `今日の電車はもうありません`;
@@ -62,12 +62,21 @@ function Datatime(props) {
 
     if (true) {// <-設定によって最速かどうか切り替える
         return (
-            <li className='list_item'>
-                <div className='bustime_label'>最速バス出発時間</div>
-                <div className="bustime_data">{bustime}</div>
-                <div className='train_label'>最速電車出発時間</div>
-                <div className="train_data">{traincheck(bustimeTable, traintimeTable)}</div>
-            </li>
+            <div className='list_item'>
+                <div className="item_main">
+                    <div className="bustime_prev">すぐに乗れるバスは</div>
+                    <div className="bustime_data">{bustime}</div>
+                    <div className="bustime_next">発です</div>
+                </div>
+                <div className="item_sub">
+                    <span className="lebel">駅での待ち時間</span>
+                    <span className="value">〇〇分</span>
+                </div>
+                <div className="item_sub">
+                    <span className="lebel">電車出発時間</span>
+                    <span className="value">{traincheck(bustimeTable, traintimeTable)}</span>
+                </div>
+            </div>
         )
     } else {
         return (

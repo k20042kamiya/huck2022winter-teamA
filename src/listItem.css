@@ -1,0 +1,21 @@
+.list_item {
+
+}
+
+.item_main .bustime_prev {
+
+}
+
+.bustime_data {
+    font-size: 50px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.bustime_next {
+    text-align: right;
+}
+
+.item_sub {
+    padding: 0px 20px;
+}
