@@ -28,19 +28,20 @@ function App() {
 
     return (<>
         <header>時刻表</header>
-        <div class="flex_test-box">
-            <div className="routebox">
-                <p className="route-select">路線選択</p>
-                <select name="route" id="route" className="route" value={routeGet} onChange={hcGene(routeSet)}>
-                    <option value="0">岡崎行き(環状線)</option>
-                    <option value="1">高蔵寺行き(環状線)</option>
-                    <option value="2">藤が丘行き(リニモ)</option>
-                </select>
-            </div>
-
-            <div className="timebox">
-                <p className="time-select">時間選択</p>
-                <input type="time" name="time_search" id="time_search" className="time_search" value={timeSearchGet} onChange={hcGene(timeSearchSet)} required />
+        <div class="page-all">
+            <div class="flex_test-box">
+                <div className="routebox">
+                    <p className="route-select">路線選択</p>
+                    <select name="route" id="route" className="route" value={routeGet} onChange={hcGene(routeSet)}>
+                        <option value="0">岡崎行き(環状線)</option>
+                        <option value="1">高蔵寺行き(環状線)</option>
+                        <option value="2">藤が丘行き(リニモ)</option>
+                    </select>
+                </div>
+                <div className="timebox">
+                    <p className="time-select">時間選択</p>
+                    <input type="time" name="time_search" id="time_search" className="time_search" value={timeSearchGet} onChange={hcGene(timeSearchSet)} required/>
+                </div>
             </div>
         </div>
 

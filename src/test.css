@@ -1,3 +1,4 @@
+
 header {
     width: 100%;
     height: 70px;
@@ -6,12 +7,18 @@ header {
     font-size: 50px;
     border-bottom: 8px double #0097A7;
     padding: 3px;
+    text-align:center;
+    margin: auto;
 }
 
 .flex_test-box {
     background-color: #ffffff;
     padding:  10px;
     display: flex;
+    flex-direction:row;
+    flex-wrap:nowrap;
+    /* display:block; */
+    text-align: center;
 }
 
 .flex_test-item {
@@ -28,15 +35,16 @@ header {
     padding-left: 10px;
     font-weight: bold;
     border: solid 2px #dcdcdc;
+    margin:0 auto;
     margin-top: -10px;
-    margin-bottom: 150px;
+    margin-right: 0px;
 }
 .route-select {
     font-size: 10px;
     margin-top: -4px;
 }
 #route{
-    margin-top: -20px;
+    margin-top: -10px;
 }
 
 .timebox {
@@ -45,16 +53,18 @@ header {
     padding-left: 10px;
     font-weight: bold;
     border: solid 2px #dcdcdc;
-    margin-top: -10px;
     margin-bottom: 150px;
+    margin:0 auto;
+    margin-top: -10px;
+    margin-left: 0px;
 }
 
 .time-select{
     font-size: 10px;
-    margin-top: -4px;
+    margin-top: -5px;
 }
 #time_search{
-    margin-top: -20px;
+    margin-top: -30px;
 }
 
 #timetable_list {
@@ -66,7 +76,8 @@ header {
     padding: 0.5em 1em;
     border: solid 3px #0097A7;
     width: 270px;
-    margin-top: -110px;
+    margin: auto;
+    margin-top: 40px;
 }
 #tab_wrapper {
     position: absolute;
@@ -105,6 +116,8 @@ header {
     height: 120px;
     width: 140px;
     border: solid 2px #a9a9a9;
+    margin: auto;
+    margin-top: 30px;
 }
 
 .today {
