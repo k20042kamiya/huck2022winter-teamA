@@ -10,7 +10,7 @@ function App() {
     const changeTab = element => selectedTabSet(element.target.dataset.index);
 
     const now = new Date();
-    const timestamp = `${now.getHours()}:${now.getMinutes().toString().padStart(2, 0)}`;
+    const timestamp = `${now.getHours().toString().padStart(2, 0)}:${now.getMinutes().toString().padStart(2, 0)}`;
     const isHoliday = JapaneseHoliday.isHoliday(now);
     const dateText = `${now.getMonth() + 1}月${now.getDate()}日（${getDayName(now, isHoliday)}）`;
     const tabs = ['余裕バス', '快適バス'];
