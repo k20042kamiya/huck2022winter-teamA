@@ -40,6 +40,12 @@ function Datatime(props) {
         }
     }
 
+        const timeCalc = ([hour, minute], diff) => {
+        let aftAllMin = (hour * 60 + minute + diff) % (24 * 60) ;
+        if (aftAllMin < 0) aftAllMin += 24 * 60;
+        return [aftAllMin / 60 | 0, aftAllMin % 60];
+    }
+
     const bustimeTable = serchTime(data[Daia], hour, minute);
     const traintimeTable = serchTime(trainData, hour, minute);
 
@@ -47,7 +53,7 @@ function Datatime(props) {
         if (selectedTab === "0") {
             if (serchT === undefined) return `今日の電車はもうありません`;
             if (serchB === undefined) return serchT;
-            const Daia = serchB.split(':').map(Number);
+            const Daia = timeCalc(serchB.split(':').map(Number), 10);
             return serchTime(trainData, Daia[0], Daia[1]);
         } else {
             if (serchT === undefined) return `この時間電車はありません`;
@@ -63,9 +69,9 @@ function Datatime(props) {
             if (serchB === undefined) return 'この時間のバスはありません';
             else if (serchT === undefined) return serchB;
             else {
-                const bus = serchB.split(':').map(Number);
+                const bus = timeCalc(serchB.split(':').map(Number), -10);
                 console.log(bus); 
-                const train = serchTime(trainData, bus[0], bus[1] - 10).split(":").map(Number);
+                const train = serchTime(trainData, bus[0], bus[1]).split(":").map(Number);
                 console.log(train);
                 console.log(serchTime(data[Daia], train[0], train[1], false));
                 return serchTime(data[Daia], train[0], train[1], false);
