@@ -21,11 +21,11 @@ function App() {
     const [timeSearchGet, timeSearchSet] = useState(timestamp);
     const [weatherGet, weatherSet] = useState(<></>);
     const [selectedTabGet, selectedTabSet] = useState(localTab);
-    
+
     localStorage.setItem('route', routeGet);
     localStorage.setItem('selectedTab', selectedTabGet);
     useEffect(() => getWether().then(ret => weatherSet(ret)), []);
-    
+
     return (<>
         <header>時刻表</header>
         <div class="page-all">
@@ -38,7 +38,6 @@ function App() {
                         <option value="2">藤が丘行き(リニモ)</option>
                     </select>
                 </div>
-
                 <div className="timebox">
                     <p className="time-select">時間選択</p>
                     <input type="time" name="time_search" id="time_search" className="time_search" value={timeSearchGet} onChange={hcGene(timeSearchSet)} required/>
