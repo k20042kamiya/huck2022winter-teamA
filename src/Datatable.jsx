@@ -16,7 +16,7 @@ function Datatime(props) {
     const Daiacheck = check_h(day, Horiday);
 
     const timetableNamelist = [
-          ['train_AikantoO_w.json', 'train_AikantoO_s.json', 'train_AikantoO_h.json'],
+        ['train_AikantoO_w.json', 'train_AikantoO_s.json', 'train_AikantoO_h.json'],
         ['train_AikantoK_w.json', 'train_AikantoK_s.json', 'train_AikantoK_h.json'],
         ['train_LinertoF_w.json', 'train_LinertoF_s.json', 'train_LinertoF_h.json']
     ];
@@ -32,25 +32,24 @@ function Datatime(props) {
             [...timetable[hour]].reverse().find(v => minute >= v);
 
         if (nearMinute === undefined) {
-            return serchTime(timetable, upper ? hour + 1 : hour - 1, upper ? 0 : 59);
+            return serchTime(timetable, upper ? hour + 1 : hour - 1, upper ? 0 : 59, upper);
         } else {
-            return `${hour}:${nearMinute.toString().padStart(2, 0)}`
+            return `${hour}:${nearMinute.toString().padStart(2, 0)}`;
         }
     }
-    const bustimeTable = serchTime(data[Daia], hour, minute)
-    const traintimeTable =  serchTime(trainData, hour, minute)
+
+    const bustimeTable = serchTime(data[Daia], hour, minute);
+    const traintimeTable = serchTime(trainData, hour, minute);
 
     const traincheck = (serchB, serchT) => {
         if (selectedTab === "0") {
             if (serchT === undefined) return `今日の電車はもうありません`;
             if (serchB === undefined) return serchT;
             const Daia = serchB.split(':').map(Number);
-            return serchTime(trainData, Daia[0], Daia[1] + 10);
+            return serchTime(trainData, Daia[0], Daia[1]);
         } else {
             if (serchT === undefined) return `今日の電車はもうありません`;
-            else { 
-                return traintimeTable
-            }
+            return traintimeTable;
         }
     }
 
@@ -63,14 +62,17 @@ function Datatime(props) {
             else if (serchT === undefined) return serchB;
             else {
                 const bus = serchB.split(':').map(Number);
-                console.log(bus)
-                const train = serchTime(trainData, bus[0], bus[1]).split(":").map(Number);
+                console.log(bus); 
+                const train = serchTime(trainData, bus[0], bus[1] - 10).split(":").map(Number);
                 console.log(train);
+                console.log(serchTime(data[Daia], train[0], train[1], false));
                 return serchTime(data[Daia], train[0], train[1], false);
+                
             }
         }
     }
-    console.log((selectedTab,bustimeTable,traintimeTable))
+
+    console.log(serchTime(data[Daia], 14, 13, false))
 
     if (Daia === 3) {
         return (
