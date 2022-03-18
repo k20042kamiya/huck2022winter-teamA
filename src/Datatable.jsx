@@ -5,7 +5,8 @@ function Datatime(props) {
     const Daiadata = require('./timetable/bus_calendar.json');
 
     const [hour, minute] = props.start.split(":").map(Number);
-    const Daia = Daiadata[props.date.getMonth() + 1][props.date.getDate() - 1];
+    const  Daia = Daiadata[props.date.getMonth() + 1]["0"];
+    // const Daia = Daiadata[props.date.getMonth() + 1][props.date.getDate() - 1];
     const day = props.date.getDay();
     const Horiday = props.isHoliday;
     const selectedTab = props.selectedTab;
@@ -53,9 +54,11 @@ function Datatime(props) {
     const traincheck = (serchB, serchT) => {
             if (serchT === undefined) return `この時間の電車はありません`;
             if (serchB === undefined) return serchT;
-            const Daia = serchB.split(':').map(Number);
-            return serchTime(trainData, Daia[0], Daia[1] + 10);
-    }
+
+
+            const Daia = timeCalc(serchB.split(':').map(Number), 10);
+            return serchTime(trainData, Daia[0], Daia[1]);
+        } 
 
     const bustime = (selectedTab, serchB, serchT) => {
         if (selectedTab === `0`) {
