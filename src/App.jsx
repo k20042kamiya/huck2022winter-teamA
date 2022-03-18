@@ -6,11 +6,13 @@ import JapaneseHoliday from 'japanese-holidays';
 
 function App() {
     const getDayName = (date, isHoliday) => isHoliday ? '祝' : ['日', '月', '火', '水', '木', '金', '土'][date.getDay()];
+    const timeFormat = (time) => `${time.getHours().toString().padStart(2, '0')}:${time.getMinutes().toString().padStart(2, '0')}`;
     const hcGene = func => (e => func(e.target.value));
     const changeTab = element => selectedTabSet(element.target.dataset.index);
+    const setTimeNow = () => timeSearchSet(timeFormat(new Date()));
 
     const now = new Date();
-    const timestamp = `${now.getHours().toString().padStart(2, 0)}:${now.getMinutes().toString().padStart(2, 0)}`;
+    const timestamp = timeFormat(now);
     const isHoliday = JapaneseHoliday.isHoliday(now);
     const dateText = `${now.getMonth() + 1}月${now.getDate()}日（${getDayName(now, isHoliday)}）`;
     const tabs = ['余裕バス', '快適バス'];
@@ -39,10 +41,10 @@ function App() {
             </div>
             <div id="timebox">
                 <p id="time-select">時間選択</p>
+                <button onClick={setTimeNow}>現在時刻</button>
                 <input type="time" name="time_search" id="time_search" value={timeSearchGet} onChange={hcGene(timeSearchSet)} required/>
             </div>
         </div>
-
         <div id="timetablebox">
             <div id="tab_wrapper">
                 {
@@ -63,7 +65,6 @@ function App() {
                 }
             </ul>
         </div>
-
         <div id="weatherbox">
             <div id="today">{dateText}</div>
             <div id="weather">{weatherGet}</div>

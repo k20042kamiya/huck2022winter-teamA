@@ -17,6 +17,7 @@ header {
     flex-direction:row;
     flex-wrap:nowrap;
     text-align: center;
+    margin-top: 10px
 }
 
 #routebox {
@@ -58,6 +59,7 @@ header {
 
 #time_search{
     margin-top: -30px;
+    margin-left: 5px;
 }
 
 #timetable_list {

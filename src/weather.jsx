@@ -1,5 +1,10 @@
 import React from 'react';
 
+/*
+    CC-BY-NC 4.0
+    https://open-meteo.com/
+*/
+
 async function getWether () {
     const codelist = require('./data/wcode_and_icon.json');
     const { current_weather } = await getAPI('https://api.open-meteo.com/v1/forecast', {
