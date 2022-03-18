@@ -59,23 +59,26 @@ function Datatime(props) {
 
     const bustime = (selectedTab, serchB, serchT) => {
         if (selectedTab === `0`) {
-            return bustimeTable ?? 'この時間のバスはありません';
+            return serchB ?? 'この時間のバスはありません';
         }
         if (selectedTab === `1`) {
             if (serchB === undefined) return 'この時間のバスはありません';
             else if (serchT === undefined) return serchB;
             else {
-                const bus = timeCalc(serchB.split(':').map(Number), -10);
+                // const bus = timeCalc(serchB.split(':').map(Number), -10);
+                const bus =timeCalc(serchB.split(':').map(Number),10);
                 console.log(bus); 
-                const train = serchTime(trainData, bus[0], bus[1]).split(":").map(Number);
-                console.log(train);
-                console.log(serchTime(data[Daia], train[0], train[1], false));
-                return serchTime(data[Daia], train[0], train[1], false);
+                // const train = timeCalc(serchTime(trainData, bus[0], bus[1]).split(":").map(Number),-10);
+                const train = (serchTime(trainData, bus[0], bus[1]).split(":").map(Number));
+                const time = timeCalc(train, -10); 
+                //const buss = serchTime(data[Daia], train[0], train[1],false) ;
+                // timeCalc(serchB.split(':').map(Number), -10);
+                return serchTime(data[Daia], time[0], time[1],false) ;
+                // timeCalc(serchB.split(':').map(Number), -10);;
             }
         }
     }
 
-    console.log(serchTime(data[Daia], 14, 13, false))
 
     if (Daia === 3) {
         return (
