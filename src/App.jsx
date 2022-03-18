@@ -1,5 +1,6 @@
 import './test.css'
 import Datatable from './Datatable';
+import CalcBusTrainTime from './CalcBusTrainTime';
 import { useState, useEffect } from 'react'
 import getWether from './weather';
 import JapaneseHoliday from 'japanese-holidays';
