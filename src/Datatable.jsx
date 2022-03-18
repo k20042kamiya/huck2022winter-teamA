@@ -5,8 +5,8 @@ function Datatime(props) {
     const Daiadata = require('./timetable/bus_calendar.json');
 
     const [hour, minute] = props.start.split(":").map(Number);
-    const  Daia = Daiadata[props.date.getMonth() + 1]["0"];
-    // const Daia = Daiadata[props.date.getMonth() + 1][props.date.getDate() - 1];
+    // const  Daia = Daiadata[props.date.getMonth() + 1]["0"];
+    const Daia = Daiadata[props.date.getMonth() + 1][props.date.getDate() - 1];
     const day = props.date.getDay();
     const Horiday = props.isHoliday;
     const selectedTab = props.selectedTab;
