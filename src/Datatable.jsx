@@ -5,6 +5,7 @@ function Datatime(props) {
     const Daiadata = require('./timetable/bus_calendar.json');
 
     const [hour, minute] = props.start.split(":").map(Number);
+    // const  Daia = Daiadata[props.date.getMonth() + 1]["0"];
     const Daia = Daiadata[props.date.getMonth() + 1][props.date.getDate() - 1];
     const day = props.date.getDay();
     const Horiday = props.isHoliday;
@@ -53,29 +54,34 @@ function Datatime(props) {
     const traincheck = (serchB, serchT) => {
             if (serchT === undefined) return `この時間の電車はありません`;
             if (serchB === undefined) return serchT;
-            const Daia = serchB.split(':').map(Number);
-            return serchTime(trainData, Daia[0], Daia[1] + 10);
-    }
+
+
+            const Daia = timeCalc(serchB.split(':').map(Number), 10);
+            return serchTime(trainData, Daia[0], Daia[1]);
+        } 
 
     const bustime = (selectedTab, serchB, serchT) => {
         if (selectedTab === `0`) {
-            return bustimeTable ?? 'この時間のバスはありません';
+            return serchB ?? 'この時間のバスはありません';
         }
         if (selectedTab === `1`) {
             if (serchB === undefined) return 'この時間のバスはありません';
             else if (serchT === undefined) return serchB;
             else {
-                const bus = timeCalc(serchB.split(':').map(Number), -10);
+                // const bus = timeCalc(serchB.split(':').map(Number), -10);
+                const bus =timeCalc(serchB.split(':').map(Number),10);
                 console.log(bus); 
-                const train = serchTime(trainData, bus[0], bus[1]).split(":").map(Number);
-                console.log(train);
-                console.log(serchTime(data[Daia], train[0], train[1], false));
-                return serchTime(data[Daia], train[0], train[1], false);
+                // const train = timeCalc(serchTime(trainData, bus[0], bus[1]).split(":").map(Number),-10);
+                const train = (serchTime(trainData, bus[0], bus[1]).split(":").map(Number));
+                const time = timeCalc(train, -10); 
+                //const buss = serchTime(data[Daia], train[0], train[1],false) ;
+                // timeCalc(serchB.split(':').map(Number), -10);
+                return serchTime(data[Daia], time[0], time[1],false) ;
+                // timeCalc(serchB.split(':').map(Number), -10);;
             }
         }
     }
 
-    console.log(serchTime(data[Daia], 14, 13, false))
 
     if (Daia === 3) {
         return (
