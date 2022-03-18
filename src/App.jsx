@@ -11,7 +11,7 @@ function App() {
     const changeTab = element => selectedTabSet(element.target.dataset.index);
     const setTimeNow = () => timeSearchSet(timeFormat(new Date()));
 
-    const now = new Date();
+    const now = new Date('2022/3/1 16:16');
     const timestamp = timeFormat(now);
     const isHoliday = JapaneseHoliday.isHoliday(now);
     const dateText = `${now.getMonth() + 1}月${now.getDate()}日（${getDayName(now, isHoliday)}）`;
