@@ -29,7 +29,7 @@ function App() {
     useEffect(() => getWether().then(ret => weatherSet(ret)), []);
 
     return (<>
-        <header>時刻表</header>
+        <header>帰るのに便利なやつ</header>
         <div id="flex_test-box">
             <div id="routebox">
                 <p id="route-select">路線選択</p>
