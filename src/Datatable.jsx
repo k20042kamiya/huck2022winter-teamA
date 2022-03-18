@@ -1,11 +1,8 @@
-
-// npm i
 function Datatime(props) {
     const data = require('./timetable/bus_AtoY.json');
     const Daiadata = require('./timetable/bus_calendar.json');
 
     const [hour, minute] = props.start.split(":").map(Number);
-    // const  Daia = Daiadata[props.date.getMonth() + 1]["0"];
     const Daia = Daiadata[props.date.getMonth() + 1][props.date.getDate() - 1];
     const day = props.date.getDay();
     const Horiday = props.isHoliday;
@@ -15,19 +12,17 @@ function Datatime(props) {
         if (day === 5) return 1;
         return 0;
     };
-
-    const Daiacheck = check_h(day, Horiday);
-
+    
     const timetableNamelist = [
         ['train_AikantoO_w.json', 'train_AikantoO_s.json', 'train_AikantoO_h.json'],
         ['train_AikantoK_w.json', 'train_AikantoK_s.json', 'train_AikantoK_h.json'],
         ['train_LinertoF_w.json', 'train_LinertoF_s.json', 'train_LinertoF_h.json']
     ];
-
+    
+    const Daiacheck = check_h(day, Horiday);
     const timetableName = timetableNamelist[props.route][Daiacheck];
     const trainData = require(`./timetable/${timetableName}`);
 
-    // 第4引数にfalseを渡すと入れた時間の直前のバス/電車を返すようにしました
     const serchTime = (timetable, hour, minute, upper = true) => {
         if (upper ? 24 <= hour : hour < 0) return;
         if (timetable[hour] === undefined) return serchTime(timetable, upper ? hour + 1 : hour - 1, upper ? 0 : 59, upper);
@@ -42,8 +37,8 @@ function Datatime(props) {
         }
     }
 
-        const timeCalc = ([hour, minute], diff) => {
-        let aftAllMin = (hour * 60 + minute + diff) % (24 * 60) ;
+    const timeCalc = ([hour, minute], diff) => {
+        let aftAllMin = (hour * 60 + minute + diff) % (24 * 60);
         if (aftAllMin < 0) aftAllMin += 24 * 60;
         return [aftAllMin / 60 | 0, aftAllMin % 60];
     }
@@ -52,13 +47,12 @@ function Datatime(props) {
     const traintimeTable = serchTime(trainData, hour, minute);
 
     const traincheck = (serchB, serchT) => {
-            if (serchT === undefined) return `この時間の電車はありません`;
-            if (serchB === undefined) return serchT;
+        if (serchT === undefined) return `この時間の電車はありません`;
+        if (serchB === undefined) return serchT;
 
-
-            const Daia = timeCalc(serchB.split(':').map(Number), 10);
-            return serchTime(trainData, Daia[0], Daia[1]);
-        } 
+        const Daia = timeCalc(serchB.split(':').map(Number), 10);
+        return serchTime(trainData, Daia[0], Daia[1]);
+    }
 
     const bustime = (selectedTab, serchB, serchT) => {
         if (selectedTab === `0`) {
@@ -68,20 +62,14 @@ function Datatime(props) {
             if (serchB === undefined) return 'この時間のバスはありません';
             else if (serchT === undefined) return serchB;
             else {
-                // const bus = timeCalc(serchB.split(':').map(Number), -10);
-                const bus =timeCalc(serchB.split(':').map(Number),10);
-                console.log(bus); 
-                // const train = timeCalc(serchTime(trainData, bus[0], bus[1]).split(":").map(Number),-10);
+                const bus = timeCalc(serchB.split(':').map(Number), 10);
+                console.log(bus);
                 const train = (serchTime(trainData, bus[0], bus[1]).split(":").map(Number));
-                const time = timeCalc(train, -10); 
-                //const buss = serchTime(data[Daia], train[0], train[1],false) ;
-                // timeCalc(serchB.split(':').map(Number), -10);
-                return serchTime(data[Daia], time[0], time[1],false) ;
-                // timeCalc(serchB.split(':').map(Number), -10);;
+                const time = timeCalc(train, -10);
+                return serchTime(data[Daia], time[0], time[1], false);
             }
         }
     }
-
 
     if (Daia === 3) {
         return (
@@ -99,9 +87,8 @@ function Datatime(props) {
                 <div className='train_label'>最速電車出発時間</div>
                 <div className="train_data">{traincheck(bustimeTable, traintimeTable)}</div>
             </li>
-        )
+        );
     }
 }
-
 
 export default Datatime;
