@@ -12,6 +12,7 @@ function CalcBusTrainTime(props) {
     const { start: start_string, date, isHoliday, selectedTab, route } = props;
     const start = start_string.split(":").map(Number);
     const busDiaMode = busCalendar[date.getMonth() + 1][date.getDate() - 1];
+    if (busDiaMode === 3) return { status: 0 }
     const busTimetable = busTimetableList[busDiaMode];
 
     const trainDiaMode = isHoliday ? 2 : (date.getDay() === 5 ? 1 : 0);
@@ -29,6 +30,9 @@ function CalcBusTrainTime(props) {
         trainTime: mostfastTrainTime
     }
 
+    const busTimeList = serchWhile(busTimetable, timeCalc(mostfastBusTime, busDuring.map(v => -v)), mostfastTrainTime);
+    console.log('busTimeList: ', busTimeList);
+    
     const mostslowBusTime = serchTime(
         busTimetable,
         timeCalc(mostfastTrainTime, busDuring.map(v => -v)),
@@ -59,6 +63,20 @@ function timeCalc([hour, minute], [diffHour, diffMinute]) {
     let aftAllMin = (hour * 60 + minute + diffHour * 60 + diffMinute) % (24 * 60);
     if (aftAllMin < 0) aftAllMin += 24 * 60;
     return [aftAllMin / 60 | 0, aftAllMin % 60];
+}
+
+function serchWhile (timetable, start, end) {
+    if (start === undefined || end === undefined) return;
+    const getAllMin = ([hour, minute]) => hour * 60 + minute;
+    const ret = [];
+    let currentTime = start;
+    while (true) {
+        const part = serchTime(timetable, currentTime);
+        if (part === undefined || getAllMin(part) > getAllMin(end)) break;
+        ret.push(part);
+        currentTime = timeCalc(part, [0, 1]);
+    }
+    return ret;
 }
 
 export default CalcBusTrainTime;
