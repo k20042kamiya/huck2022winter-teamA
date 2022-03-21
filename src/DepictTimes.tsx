@@ -1,6 +1,7 @@
+import React from "react";
 import CalcBusTrainTime from "./CalcBusTrainTime";
 
-function main(props) {
+function main(props: Parameters<typeof CalcBusTrainTime>[0]) {
     const { busTime, trainTime, status } = CalcBusTrainTime(props);
     
     if (status === 1) return (<div className="item">
