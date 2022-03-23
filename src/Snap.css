@@ -1,0 +1,31 @@
+#timetable_list {
+    width: 100%;
+    overflow-x: scroll;
+}
+
+#time-list {
+    display: flex;
+    overflow-x: auto;
+    column-gap: 50px;
+    scroll-snap-type: x mandatory;
+}
+
+.time-item {
+    scroll-snap-align: center;
+}
+
+.time-item * {
+    text-align: center;
+}
+
+.traintime-head {
+    text-align: left;
+}
+
+.traintime-data {
+    font-size: 100px;
+}
+
+.traintime-tail {
+    text-align: right;
+}

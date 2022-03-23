@@ -1,14 +1,17 @@
+import React from 'react';
 import './test.css'
+import './Snap.css'
 import Datatable from './Datatable';
+import DepictTimes from './DepictTimes';
 import { useState, useEffect } from 'react'
 import getWether from './weather';
 import JapaneseHoliday from 'japanese-holidays';
 
 function App() {
-    const getDayName = (date, isHoliday) => isHoliday ? '祝' : ['日', '月', '火', '水', '木', '金', '土'][date.getDay()];
-    const timeFormat = (time) => `${time.getHours().toString().padStart(2, '0')}:${time.getMinutes().toString().padStart(2, '0')}`;
-    const hcGene = func => (e => func(e.target.value));
-    const changeTab = element => selectedTabSet(element.target.dataset.index);
+    const getDayName = (date: Date, isHoliday: string | undefined) => isHoliday ? '祝' : ['日', '月', '火', '水', '木', '金', '土'][date.getDay()];
+    const timeFormat = (time: Date) => `${time.getHours().toString().padStart(2, '0')}:${time.getMinutes().toString().padStart(2, '0')}`;
+    const hcGene = (func: Function) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => func(e.target.value);
+    const changeTab = (element: React.MouseEvent<HTMLSpanElement, MouseEvent>) => selectedTabSet(element.currentTarget.dataset.index ?? '0');
     const setTimeNow = () => timeSearchSet(timeFormat(new Date()));
 
     const now = new Date();
@@ -26,7 +29,9 @@ function App() {
 
     localStorage.setItem('route', routeGet);
     localStorage.setItem('selectedTab', selectedTabGet);
-    useEffect(() => getWether().then(ret => weatherSet(ret)), []);
+    useEffect(() => {
+        getWether().then(ret => weatherSet(ret));
+    }, []);
 
     return (<>
         <header>帰るのに便利なやつ</header>
@@ -46,24 +51,24 @@ function App() {
             </div>
         </div>
         <div id="timetablebox">
-            <div id="tab_wrapper">
+            {/* <div id="tab_wrapper">
                 {
                     tabs.map((name, key) =>
                         <span className={`tab ${selectedTabGet === String(key) ? 'tab_front' : 'tab_back'}`} data-index={key} onClick={changeTab}>{name}</span>
                     )
                 }
-            </div>
-            <ul id="timetable_list" className="timetable_list">
+            </div> */}
+            <div id="timetable_list" className="timetable_list">
                 {
-                    <Datatable
+                    <DepictTimes
                         route={routeGet}
                         start={timeSearchGet}
                         date={now}
-                        isHoliday={isHoliday}
+                        isHoliday={!!isHoliday}
                         selectedTab={selectedTabGet}
                     />
                 }
-            </ul>
+            </div>
         </div>
         <div id="weatherbox">
             <div id="today">{dateText}</div>
