@@ -1,10 +1,6 @@
-import CalcBusTrainTime from './CalcBusTrainTime';
-
 function Datatime(props) {
     const data = require('./timetable/bus_AtoY.json');
     const Daiadata = require('./timetable/bus_calendar.json');
-    const t = CalcBusTrainTime(props);
-    console.log(...t.busTime, '|', ...t.trainTime);
 
     const [hour, minute] = props.start.split(":").map(Number);
     const Daia = Daiadata[props.date.getMonth() + 1][props.date.getDate() - 1];
@@ -67,6 +63,7 @@ function Datatime(props) {
             else if (serchT === undefined) return serchB;
             else {
                 const bus = timeCalc(serchB.split(':').map(Number), 10);
+                console.log(bus);
                 const train = (serchTime(trainData, bus[0], bus[1]).split(":").map(Number));
                 const time = timeCalc(train, -10);
                 return serchTime(data[Daia], time[0], time[1], false);
