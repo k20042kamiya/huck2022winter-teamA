@@ -1,22 +1,35 @@
 import React from "react";
 import CalcBusTrainTime from "./CalcBusTrainTime";
 
-function main(props: Parameters<typeof CalcBusTrainTime>[0]) {
+function DepictTimes(props: Parameters<typeof CalcBusTrainTime>[0]) {
     const { busTime, trainTime, status } = CalcBusTrainTime(props);
-    
-    if (status === 1) return (<div className="item">
-        <div className="suspencion">本日は運休です</div>
+
+    return (<div id="time-list">
+        <div className="time-item">
+            <div className="traintime-head">次に来る電車は</div>
+            <div className="traintime-data">13:05</div>
+            <div className="traintime-tail">です</div>
+            <div className="bustime-data">12:34</div>
+            <div className="bustime-data">12:39</div>
+            <div className="bustime-data">12:56</div>
+        </div>
+        <div className="time-item">
+            <div className="traintime-head">次に来る電車は</div>
+            <div className="traintime-data">13:05</div>
+            <div className="traintime-tail">です</div>
+            <div className="bustime-data">12:34</div>
+            <div className="bustime-data">12:39</div>
+            <div className="bustime-data">12:56</div>
+        </div>
+        <div className="time-item">
+            <div className="traintime-head">次に来る電車は</div>
+            <div className="traintime-data">13:05</div>
+            <div className="traintime-tail">です</div>
+            <div className="bustime-data">12:34</div>
+            <div className="bustime-data">12:39</div>
+            <div className="bustime-data">12:56</div>
+        </div>
     </div>);
-
-    if (busTime === undefined && trainTime === undefined) {
-        return (<div className="item">
-            <div className="noTrain">今日の電車はもうありません</div>
-        </div>);
-    }
-
-    if (busTime !== undefined) {
-        <div className="main">今日のバスはもうありません</div>
-    }
 }
 
-export default main;
+export default DepictTimes;
