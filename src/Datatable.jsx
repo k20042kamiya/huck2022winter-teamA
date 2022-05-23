@@ -25,7 +25,7 @@ function Datatime(props) {
 
     const serchTime = (timetable, hour, minute, upper = true) => {
         if (upper ? 24 <= hour : hour < 0) return;
-        if (timetable[hour] === undefined) return serchTime(timetable, upper ? hour + 1 : hour - 1, upper ? 0 : 59, upper);
+        if (timetable?.[hour] === undefined) return serchTime(timetable, upper ? hour + 1 : hour - 1, upper ? 0 : 59, upper);
         const nearMinute = upper ?
             timetable[hour].find(v => minute <= v) :
             [...timetable[hour]].reverse().find(v => minute >= v);
